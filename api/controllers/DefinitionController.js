@@ -7,7 +7,7 @@
  const app_id = '3e23ba37';
  const app_key = '90da04772846856a4fc02a7146753d12';
  
- var request = require('request');
+ var rp = require('request-promise');
 
 module.exports = {
   define: function (req, res) {
@@ -19,19 +19,20 @@ module.exports = {
       'app_id': '3e23ba37',
       'app_key': '90da04772846856a4fc02a7146753d12'
     },
+    // json: true // Automatically parses the JSON string in the response
   };
 
-  function callback(error, response, body) {
-    if (error) {
-      res.send(error);
-    }
-    else {
-      const responseBody = JSON.parse(body);
-      res.send(responseBody);
-    }
-  }
-
-  request(options, callback);
+  rp(options)
+    .then(function (response) {
+        res.send(response);
+    })
+    .catch(function (err) {
+      // if (err.statusCode === 404) {
+      //   res.send(err.statusCode);
+      // } else {
+        res.send(err.statusCode);
+      // }
+    });
 
 	}
 };
