@@ -11,7 +11,7 @@
 
 module.exports = {
   define: function (req, res) {
-  const word = req.body.definition;
+  const word = req.body.vocabword;
 
   const options = {
     url: 'https://od-api.oxforddictionaries.com/api/v1/entries/en/' + word,
@@ -27,11 +27,7 @@ module.exports = {
         res.send(response);
     })
     .catch(function (err) {
-      // if (err.statusCode === 404) {
-      //   res.send(err.statusCode);
-      // } else {
-        res.send(err.statusCode);
-      // }
+      res.send(err.statusCode);
     });
 
 	}
